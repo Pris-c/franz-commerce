@@ -1,5 +1,6 @@
-package org.prisc;
+package org.prisc.producer;
 
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -8,18 +9,23 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-public class NewOrderMain {
+public class FranzCommerceProducer {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         var producer = new KafkaProducer<String, String>(properties());
-        var value = "123123, 456456, 789654123";
-        var record = new ProducerRecord<>("FRANZ_COMMERCE_NEW_ORDER", value, value);
-        producer.send(record, (data, ex) -> {
+        Callback callback = (data, ex) -> {
             if (ex != null) {
                 ex.printStackTrace();
                 return;
             }
             System.out.println("SUCSESS " + data.topic() + ":::partition " + data.partition() + "/offiset " + data.offset() + "/timestamp " + data.timestamp());
-        }).get();
+        };
+
+        var newOrder = "123, 456, 7890";
+        var email = "Your order are being processed";
+        var record = new ProducerRecord<>("FRANZ_COMMERCE_NEW_ORDER", newOrder, newOrder);
+        var emailRecord = new ProducerRecord<>("FRANZ_SEND_EMAIL", email, email);
+        producer.send(record, callback).get();
+        producer.send(emailRecord, callback).get();
     }
 
     private static Properties properties() {
