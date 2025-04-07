@@ -1,4 +1,4 @@
-package org.prisc;
+package org.prisc.service;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
