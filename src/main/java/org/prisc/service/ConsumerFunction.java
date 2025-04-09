@@ -2,6 +2,6 @@ package org.prisc.service;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
-public interface ConsumerFuncion {
+public interface ConsumerFunction {
     void consume(ConsumerRecord<String, String> record);
 }
