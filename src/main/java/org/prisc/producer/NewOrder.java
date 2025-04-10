@@ -20,7 +20,6 @@ public class NewOrder {
                     var email = "Your order are being processed";
                     emailProducer.send("FRANZ_SEND_EMAIL", userId, email);
                 }
-                throw new RuntimeException();
             }
         }
     }
