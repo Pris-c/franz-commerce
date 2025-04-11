@@ -1,17 +1,25 @@
 package org.prisc.service;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.prisc.model.EmailMessage;
+
+import java.util.HashMap;
 
 public class EmailService {
 
     public static void main(String[] args) {
         var emailService = new EmailService();
-        try(var service = new KafkaService(EmailService.class.getSimpleName(), "FRANZ_SEND_EMAIL", emailService::parse)) {
+        try(var service = new KafkaService<>(EmailService.class.getSimpleName(),
+                "FRANZ_SEND_EMAIL",
+                emailService::parse,
+                EmailMessage.class,
+                new HashMap<>()
+        )) {
             service.run();
         }
     }
 
-    private void parse(ConsumerRecord<String, String> record) {
+    private void parse(ConsumerRecord<String, EmailMessage> record) {
         System.out.println("------Sending new email------");
         System.out.println("key: " + record.key());
         System.out.println("value: " + record.value());
@@ -24,7 +32,5 @@ public class EmailService {
         }
         System.out.println("------Email sent------");
     }
-
-
 
 }
