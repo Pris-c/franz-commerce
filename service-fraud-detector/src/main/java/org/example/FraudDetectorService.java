@@ -1,7 +1,6 @@
 package org.example;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.producer.KafkaProducer;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

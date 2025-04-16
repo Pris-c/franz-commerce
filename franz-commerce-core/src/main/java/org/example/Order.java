@@ -29,4 +29,8 @@ public class Order {
                 ", value=" + value +
                 '}';
     }
+
+    public String getEmail() {
+        return "email";
+    }
 }
