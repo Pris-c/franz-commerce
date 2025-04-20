@@ -43,13 +43,13 @@ public class CreateUserService {
         var order = record.value();
 
         if (isNewUser(order.getEmail())){
-            insertNewUser(order.getEmail());
+            insertNewUser(order.getUserId(), order.getEmail());
         }
     }
 
-    private void insertNewUser(String email) throws SQLException {
+    private void insertNewUser(String uuid, String email) throws SQLException {
         var insertStatement = connection.prepareStatement("INSERT INTO Users (uuid, email) VALUES (?,?)");
-        insertStatement.setString(1, "uuid");
+        insertStatement.setString(1, uuid);
         insertStatement.setString(2, email);
         insertStatement.execute();
         System.out.println("User uuid, email: " + email + " added successfully");

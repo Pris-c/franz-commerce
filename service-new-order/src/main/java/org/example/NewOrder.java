@@ -13,11 +13,13 @@ public class NewOrder {
                     var userId = UUID.randomUUID().toString();
                     var orderId = UUID.randomUUID().toString();
                     var value = BigDecimal.valueOf(Math.random() * 5000 + 1);
-                    var order = new Order(userId, orderId, value);
+                    //var email = Math.random() + "@email.com";
+                    var email = "user2@email.com";
+                    var order = new Order(userId, orderId, value, email);
                     orderProducer.send("FRANZ_COMMERCE_NEW_ORDER", userId, order);
 
-                    var email = new EmailMessage("Confirmation", "Your order are being processed");
-                    emailProducer.send("FRANZ_SEND_EMAIL", userId, email);
+                    var emailMessage = new EmailMessage("Confirmation", "Your order are being processed");
+                    emailProducer.send("FRANZ_SEND_EMAIL", userId, emailMessage);
                 }
             }
         }

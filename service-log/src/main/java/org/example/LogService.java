@@ -24,10 +24,10 @@ public class LogService {
             System.out.println("---------------------");
             System.out.println("LOG " + record.topic());
             System.out.println("key: " + record.key());
-            System.out.println("value: " + record.value());
+            System.out.println("value: " + record);
             System.out.println("partition: " + record.partition());
             System.out.println("offset: " + record.offset());
-            System.out.println("---------------------");
+            System.out.println("\n\n");
     }
 
 }
