@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class CreateUserService {
 
@@ -43,13 +44,13 @@ public class CreateUserService {
         var order = record.value();
 
         if (isNewUser(order.getEmail())){
-            insertNewUser(order.getUserId(), order.getEmail());
+            insertNewUser(order.getEmail());
         }
     }
 
-    private void insertNewUser(String uuid, String email) throws SQLException {
+    private void insertNewUser(String email) throws SQLException {
         var insertStatement = connection.prepareStatement("INSERT INTO Users (uuid, email) VALUES (?,?)");
-        insertStatement.setString(1, uuid);
+        insertStatement.setString(1, UUID.randomUUID().toString());
         insertStatement.setString(2, email);
         insertStatement.execute();
         System.out.println("User uuid, email: " + email + " added successfully");

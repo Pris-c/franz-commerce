@@ -37,10 +37,10 @@ public class FraudDetectorService {
         var order = record.value();
         if(isFraud(order)){
             System.out.println("DANGER: Fraud detected! " + order);
-            orderSender.send("FRANZ_COMM_ORDER_REJECTED", order.getUserId(), order);
+            orderSender.send("FRANZ_COMM_ORDER_REJECTED", order.getEmail(), order);
         } else {
             System.out.println("Order approved: " + order);
-            orderSender.send("FRANZ_COMM_ORDER_APPROVED", order.getUserId(), order);
+            orderSender.send("FRANZ_COMM_ORDER_APPROVED", order.getEmail()  , order);
         }
 
         System.out.println("Order processed");

@@ -10,16 +10,15 @@ public class NewOrder {
         try(var orderProducer = new KafkaCreator<Order>()) {
             try (var emailProducer = new KafkaCreator<EmailMessage>()) {
                 for (var i = 0; i < 10; i++) {
-                    var userId = UUID.randomUUID().toString();
+
                     var orderId = UUID.randomUUID().toString();
                     var value = BigDecimal.valueOf(Math.random() * 5000 + 1);
-                    //var email = Math.random() + "@email.com";
-                    var email = "user2@email.com";
-                    var order = new Order(userId, orderId, value, email);
-                    orderProducer.send("FRANZ_COMMERCE_NEW_ORDER", userId, order);
+                    var email = Math.random() + "@email.com";
+                    var order = new Order(orderId, value, email);
+                    orderProducer.send("FRANZ_COMMERCE_NEW_ORDER", email, order);
 
                     var emailMessage = new EmailMessage("Confirmation", "Your order are being processed");
-                    emailProducer.send("FRANZ_SEND_EMAIL", userId, emailMessage);
+                    emailProducer.send("FRANZ_SEND_EMAIL", email, emailMessage);
                 }
             }
         }
